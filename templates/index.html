@@ -1,9 +1,44 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<h1> index page </h1>
-<p>
-  abc
-</p>
+<div class = 'base'>
+  <center><h3> Our project scope~ </h3></center>
+  <p>
+    Our objective consists of providing a platform to display time series trends and forecast data for normalized
+    search terms from Google. Due to the sheer number of features possible with a dataset like this,
+    we are focusing primarily on terms related to the medical epidemiology field, with COVID-19 symptoms specifically.
+    
+    <br><br>
+    
+    The frontend and backend are created with Python using the Flask library. ARIMA models were used for time series analysis and predictions
+    which we will use to predict search term trends. The time series analysis code is hosted in a seperate Jupyter notebook, but important code
+    snippets are provided as formatted text. For example, reference the sample below that we used to import our data into the notebook.
+  
+  </p>
+
+  <div class = 'code'>
+    </p>
+      <code>
+        from google.colab import files <br>
+        uploaded = files.upload() <br>
+        path = '/content/searches - US Sample.csv' <br>
+        df = pd.read_csv(path)
+      </code>
+    </p>
+  </div>
+
+  <p>  
+    There are a number of COVID-19 forecast applications that are available, ours however differs as we expect
+    to have a focus on Google search terms by location, wherein a user can forecast COVID-19 related search terms
+    rates for a given state. Groups and stakeholders would include healthcare professionals that could utilize the forecasts
+    to plan/prepare for expected increases in COVID-19 cases based on related symptom searches.
+
+    <br><br>
+
+    We aimed to create this dashboard to provide an easy and effective way for interested parties to explore these
+    google trends and simulate future predictions.
+  </p>
+
+</div>
 
 {% endblock %}
