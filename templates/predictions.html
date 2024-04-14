@@ -3,9 +3,26 @@
 
 <div class = 'base'>
   <center><h3> Our predictions </h3></center>
-  <p>
-    abc
-  </p>
+
+  <form>
+    <input type="radio" name="symptom" value="impetigo.png" onchange="switchPrediction(this.value)" checked> Impetigo
+    <input type="radio" name="symptom" value="itch.png" onchange="switchPrediction(this.value)"> Itch
+    <input type="radio" name="symptom" value="nausea.png" onchange="switchPrediction(this.value)"> Nausea
+    <input type="radio" name="symptom" value="skin rash.png" onchange="switchPrediction(this.value)"> Skin Rash
+    <input type="radio" name="symptom" value="swelling.png" onchange="switchPrediction(this.value)"> Swelling
+  </form>
+
+  <p><br></p>
+
+  <div class = 'image'>
+    <img id="displayedImage" src="{{ url_for('static', filename='images/impetigo.png') }}" alt="Displayed Prediction">
+  </div>
+
+  <script>
+    function switchPrediction(symptom) {
+      document.getElementById('displayedImage').src = "{{ url_for('static', filename='images/') }}" + symptom;
+    }
+  </script>
 </div>
 
 {% endblock %}

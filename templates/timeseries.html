@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class = 'base'>
+  <center><h3> Our sample code </h3></center>
+  <p>
+    We've provided the main important code snippets of how we made our predictions below.
+    The full notebook can also be viewed at the very end.
+    
+    <br><br>
+    
+    Our ARIMA model & plotly library used to create our prediction plots: <br>
+    <div class = 'code'>
+        <code>
+            obs = load_observations()<br>
+            <br>
+            df = pd.read_csv("/content/nauseaForecast.csv")<br>
+            df.columns = ['date', 'mean']<br>
+            df['date'] = pd.to_datetime(df['date'])<br>
+            <br>
+            xmin = obs['date'].min()<br>
+            xmax = df['date'].max()<br>
+            xd = datetime.timedelta(days=90)<br>
+            <br>
+            lines = [dict(type='line',<br>
+                        x0 = datetime.datetime(2019+i,12,25),<br>
+                        x1 = min(datetime.datetime(2020+i,12,1),<br>
+                                xmax+datetime.timedelta(days=30)),<br>
+                        y0 = .04, y1 = .04, yref='paper',<br>
+                        line=dict(color = c,<br>
+                                    width=5))<br>
+                    for i,c in enumerate(['#3366cc', '#ff9900', '#990099', '#0099c6'])]<br>
+                    <br>
+            annotations = [dict(x=obs['date'].iloc[-1],<br>
+                                y=obs['search_trends_nausea'].iloc[-1] + .08,<br>
+                                ax=60, ay=-30,<br>
+                                text='September 12 2022',<br>
+                                xanchor='left', align='left',<br>
+                                )]<br>
+                                <br>
+            fig = go.Figure()<br>
+            fig.add_trace(go.Scatter(name='observations',<br>
+                                    x=obs['date'],<br>
+                                    y=obs['search_trends_nausea'],<br>
+                                    line=dict(width=1.5,<br>
+                                            color='black')))<br>
+            fig.add_trace(go.Scatter(name='forecast',<br>
+                                    x=df['date'],<br>
+                                    y=df['mean'],<br>
+                                    line=dict(width=1.5,<br>
+                                            color='#dc3912')))<br>
+            fig.update_layout(plot_bgcolor='white',<br>
+                            height=600,<br>
+                            width=1000,<br>
+                            legend=dict(x=.15, y=.9, itemsizing='constant'),<br>
+                            shapes=lines,<br>
+                            annotations=annotations,<br>
+                            font=dict(size=18),<br>
+                            margin=dict(t=20, b=20, l=20, r=20),<br>
+                            title=dict(text='ARIMA forecast for search trends of nausea',<br>
+                                        automargin=True))<br>
+            fig.update_xaxes(range=[xmin-xd, xmax+xd],<br>
+                            tickformat="%b\n%Y",<br>
+                            dtick="M3")<br>
+            fig.update_yaxes(title='Normalized search frequency',<br>
+                            range=[-.1, 1.1])<br>
+            fig.show()<br>      
+        </code>
+    </div>
+
+    <br><br>
+
+    See the notebook below for the full code that was ran to obtain our predictions. <br>
+    <a href="https://colab.research.google.com/drive/14yDyl_4PaecMauUcfPbPhIzF6MDOm4iV?usp=sharing">Full Jupyter notebook link</a>
+  </p>
+</div>
+
+{% endblock %}
